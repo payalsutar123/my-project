@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block title %}my_Course{% endblock %} {% load course_tags %} {% block content %}
+
+
+
+<section class="h-100 mt-5">
+    <div class="container h-100 py-5" style="background-image: linear-gradient(to right, blue, indigo, violet);margin-bottom: 5rem;box-shadow: 0 0 50px #ccc;">
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-normal mb-0 text-white fw-bold" style="font-size: 2rem;">Your Wishlist</h3>
+                </div>
+                {% for i in course %}
+                <div class="card rounded-3" style="margin-bottom: 3rem;">
+                    <div class="card-body p-4">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <img src="/{{i.featured_image}}" class="img-fluid rounded-3" alt="Cotton T-shirt" style="height: 12rem;width: 100%;">
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <p class="lead fw-normal mb-2">{{i.author.name}}</p>
+                                <p class="text-uppercase">{{i.title}}</p>
+                                <p>{{i.category}}</p>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <span style="color: orange; font-size: 1rem;">
+                                    {% for _ in stars_range %}
+                                        {% if forloop.counter <= i.max_rating %}
+                                            &#9733;
+                                        {% else %}
+                                            &#9734;
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                                <div class="font-size-sm">
+                                    <span style="margin-left: 8px;">{{ i.total_reviews }} reviews</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 col-lg-2 col-xl-2 offset-lg-1">
+                                {% if i.price == 0 %}
+                                <div class="col-auto px-2 text-right">
+
+                                    <ins class="h4 mb-0 d-block mb-lg-n1"><a href="#" class="badge badge-primary p-4 mt-2">Free</a></ins>
+                                </div>
+                                {% else %}
+                                <div class="col-auto px-2 text-right">
+                                    <del class="font-size-sm">₹ {{i.price}}</del>
+                                    <ins class="h4 mb-0 d-block mb-lg-n1">₹ {% discount_calculation i.price i.discount %}</ins>
+                                </div>
+                                {% endif %}
+
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <form action="">
+                                    <a href="#!" type="submit" value="Delete" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
